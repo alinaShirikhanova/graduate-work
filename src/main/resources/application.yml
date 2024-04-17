@@ -3,3 +3,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: 123
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  liquibase:
+    change-log: classpath:db/changelog-master.yml
+    liquibase-schema: public
+    enabled: true
