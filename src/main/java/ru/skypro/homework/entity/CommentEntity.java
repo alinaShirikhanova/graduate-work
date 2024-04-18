@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-@Builder
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)

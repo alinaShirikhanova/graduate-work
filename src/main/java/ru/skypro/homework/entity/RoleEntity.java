@@ -10,7 +10,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @Entity
-@Builder
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(schema = "public", name = "role")

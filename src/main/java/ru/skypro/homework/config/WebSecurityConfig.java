@@ -1,3 +1,4 @@
+
 package ru.skypro.homework.config;
 
 import org.springframework.context.annotation.Bean;
@@ -58,5 +59,4 @@ public class WebSecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

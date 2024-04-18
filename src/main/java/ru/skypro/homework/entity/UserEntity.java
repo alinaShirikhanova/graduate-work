@@ -12,7 +12,6 @@ import java.util.Collection;
 @Setter
 @Getter
 @Entity
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)

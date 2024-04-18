@@ -3,12 +3,13 @@ package ru.skypro.homework.entity;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+
 import javax.persistence.*;
+
 
 @Setter
 @Getter
 @Entity
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
