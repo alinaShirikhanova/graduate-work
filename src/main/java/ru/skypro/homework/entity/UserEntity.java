@@ -1,9 +1,11 @@
 package ru.skypro.homework.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
-
 
 import javax.persistence.*;
 import java.util.Set;
@@ -30,10 +32,10 @@ public class UserEntity {
     private String username;
 
     /**
-     * Email пользователя
+     * Пароль пользователя
      */
-    @Column(name = "email", unique = true)
-    private String email;
+    @Column(name = "password")
+    private String password;
 
     /**
      * Имя пользователя
