@@ -17,28 +17,25 @@ import ru.skypro.homework.dto.rs.comment.Comments;
 public class CommentController {
 
     @GetMapping("/{id}/comments")
-    public ResponseEntity<Comments> getComments(@PathVariable("id") Integer id, Authentication authentication) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    public ResponseEntity<Comments> getComments(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(new Comments());
     }
 
 
     @PostMapping(value = "/{id}/comments")
-    public ResponseEntity<?> addComment(@PathVariable("id") Integer id, @RequestBody CreateOrUpdateComment createOrUpdateComment, Authentication authentication) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> addComment(@PathVariable("id") Integer id, @RequestBody CreateOrUpdateComment createOrUpdateComment) {
+        return ResponseEntity.ok(new Comment());
     }
 
 
     @DeleteMapping("/{adId}/comments/{commentId}")
-    @PreAuthorize(value = "hasRole('ADMIN') or @adServiceImpl.isAuthorAd(authentication.getName(), #adId)")
     public ResponseEntity<?> deleteComment(@PathVariable("adId") Integer adId,
-                                           @PathVariable("commentId") Integer commentId,
-                                           Authentication authentication) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+                                           @PathVariable("commentId") Integer commentId) {
+        return ResponseEntity.ok().build();
     }
 
 
     @PatchMapping("/{adId}/comments/{commentId}")
-    @PreAuthorize(value = "hasRole('ADMIN') or @adServiceImpl.isAuthorAd(authentication.getName(), #adId)")
     public ResponseEntity<?> updateComment(@PathVariable("adId") Integer adId,
                                            @PathVariable("commentId") Integer commentId,
                                            @RequestBody CreateOrUpdateComment createOrUpdateComment,

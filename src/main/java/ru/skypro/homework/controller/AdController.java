@@ -10,6 +10,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
+import ru.skypro.homework.dto.rq.ad.CreateOrUpdateAd;
+import ru.skypro.homework.dto.rs.ad.Ad;
+import ru.skypro.homework.dto.rs.ad.Ads;
+import ru.skypro.homework.dto.rs.ad.ExtendedAd;
 
 import java.io.IOException;
 
@@ -48,8 +52,8 @@ public class AdController {
 
 
     @GetMapping("/me")
-    public ResponseEntity<Ads> getAdsMe() {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    public ResponseEntity<Ads> getMyAds() {
+            return ResponseEntity.ok(new Ads());
         }
 
 
@@ -59,8 +63,5 @@ public class AdController {
     public ResponseEntity<?> updateImage(@PathVariable("id") Integer adId,
                                          @RequestPart MultipartFile image) {
         return ResponseEntity.ok().build();
-
     }
-
-
 }
