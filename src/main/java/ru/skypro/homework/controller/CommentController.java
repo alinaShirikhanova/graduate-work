@@ -42,5 +42,4 @@ public class CommentController {
                                            Authentication authentication) {
         return ResponseEntity.ok(new Comment());
     }
-
 }
