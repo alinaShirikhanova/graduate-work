@@ -6,7 +6,7 @@ import lombok.Data;
 public class Comment {
     private Integer author;
     private String authorImage;
-    private Integer authorFirstName;
+    private String authorFirstName;
     private Long createdAt;
     private Integer pk;
     private String text;

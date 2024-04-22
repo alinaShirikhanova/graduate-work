@@ -8,4 +8,6 @@ import ru.skypro.homework.entity.AdEntity;
 public interface AdMapper {
     CreateOrUpdateAd createOrUpdateAdToAdEntity(AdEntity adEntity);
     AdEntity AdEntityToCreateOrUpdateAd(CreateOrUpdateAd createOrUpdateAd);
+
+
 }

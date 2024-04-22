@@ -6,47 +6,78 @@ import lombok.experimental.Accessors;
 
 
 import javax.persistence.*;
+import java.util.Set;
 
-import java.util.Collection;
-
-@Setter
-@Getter
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(schema = "public", name = "users")
+@Table(schema = "graduate", name = "users")
 public class UserEntity {
+    /**
+     * Id пользователя
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="username")
-    private String userName;
+    /**
+     * Логин пользователя
+     */
+    @Column(name = "username", unique = true)
+    private String username;
 
-    @Column(name="password")
-    private String password;
+    /**
+     * Email пользователя
+     */
+    @Column(name = "email", unique = true)
+    private String email;
 
-    @Column(name="first_name")
+    /**
+     * Имя пользователя
+     */
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name="last_name")
+    /**
+     * Фамилия пользователя
+     */
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name="phone")
+    /**
+     * Телефон пользователя
+     */
+    @Column(name = "phone", nullable = false)
     private String phone;
 
-    @JsonIgnore 
-    @JoinColumn(name = "role_id")
+    /**
+     * Ссылка на аватар пользователя
+     */
+    @Column(name = "image")
+    private String image;
+
+    /**
+     * Комментарии пользователя
+     */
+    @JsonIgnore
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    private Set<CommentEntity> comments;
+
+    /**
+     * Объявления пользователя
+     */
+    @JsonIgnore
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    private Set<AdEntity> ads;
+
+    /**
+     * Роль пользователя
+     */
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
     private RoleEntity role;
-
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private Collection<CommentEntity> comments;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private Collection<AdEntity> ads;
 }

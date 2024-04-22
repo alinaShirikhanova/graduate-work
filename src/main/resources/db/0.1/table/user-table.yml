@@ -32,6 +32,13 @@ databaseChangeLog:
                   type: text
                   constraints:
                     nullable: false
+#              - column:
+#                  name: username
+#                  type: text
+#                  constraints:
+#                    nullable: false
+
+
               - column:
                   name: password
                   type: text

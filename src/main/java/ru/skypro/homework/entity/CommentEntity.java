@@ -2,8 +2,12 @@ package ru.skypro.homework.entity;
 
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
+import java.util.Calendar;
+
 
 @Setter
 @Getter
@@ -18,8 +22,9 @@ public class CommentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="created_at")
-    private Long createdAt;
+
+    @Column(name = "createdAt", nullable = false, updatable = false, insertable = false)
+    private Long createdAt = OffsetDateTime.now().toEpochSecond();
 
     @Column(name="text")
     private String text;
