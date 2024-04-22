@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.skypro.homework.dto.rq.user.NewPassword;
+import ru.skypro.homework.dto.rq.user.UpdateUser;
 
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
