@@ -1,10 +1,12 @@
 package ru.skypro.homework.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.Accessors;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Setter
@@ -15,20 +17,46 @@ import javax.persistence.*;
 @Accessors(chain = true)
 @Table(schema = "public", name = "ads")
 public class AdEntity {
+    /**
+     * Id объявления
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
-    private String title;
+    /**
+     * Медиа файл объявления
+     */
+    @Column(name = "image", nullable = false)
+    private String image;
 
-    @Column(nullable = false)
+    /**
+     * Цена объявления
+     */
+    @Column(name = "price", nullable = false)
     private Integer price;
 
-    @Column(nullable = false)
+    /**
+     * Название объявления
+     */
+    @Column(name = "title", nullable = false)
+    private String title;
+
+    /**
+     * Описание объявления
+     */
+    @Column(name = "description", nullable = false)
     private String description;
 
+    /**
+     * Автор объявления
+     */
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id", nullable = false)
+    @JoinColumn(name = "author_id")
     private UserEntity author;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "ad", fetch = FetchType.LAZY)
+    private List<CommentEntity> comments;
 }

@@ -32,4 +32,9 @@ public class CommentEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private UserEntity author;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ad_id")
+    private AdEntity ad;
 }
