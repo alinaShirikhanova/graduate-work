@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.skypro.homework.dto.*;
+
 import ru.skypro.homework.dto.rq.ad.CreateOrUpdateAd;
 import ru.skypro.homework.dto.rs.ad.Ad;
 import ru.skypro.homework.dto.rs.ad.Ads;

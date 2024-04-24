@@ -12,10 +12,13 @@ import ru.skypro.homework.service.AuthService;
 @Slf4j
 @CrossOrigin
 @RestController
-@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Login login) {
