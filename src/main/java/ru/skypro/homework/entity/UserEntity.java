@@ -29,12 +29,8 @@ public class UserEntity {
     @Column(name = "username", unique = true)
     private String username;
 
-    /**
-     * Email пользователя
-     */
-    @Column(name = "email", unique = true)
-    private String email;
-
+    @Column(name = "password")
+    private String password;
     /**
      * Имя пользователя
      */
