@@ -18,6 +18,7 @@ import javax.sql.DataSource;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
+@EnableWebSecurity
 public class WebSecurityConfig {
 
     private static final String[] AUTH_WHITELIST = {
@@ -30,25 +31,18 @@ public class WebSecurityConfig {
     };
 
 
-    @Configuration
-    @EnableWebSecurity
-    public class SecurityConfig {
+//    @Bean
+//    public UserDetailsManager users(DataSource dataSource) {
+//        UserDetails user = User.withDefaultPasswordEncoder()
+//                .username("user")
+//                .password("password")
+//                .roles("USER")
+//                .build();
+//        JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
+//        users.createUser(user);
+//        return users;
+//    }
 
-
-
-        @Bean
-        public UserDetailsManager users(DataSource dataSource) {
-            UserDetails user = User.withDefaultPasswordEncoder()
-                    .username("user")
-                    .password("password")
-                    .roles("USER")
-                    .build();
-            JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-            users.createUser(user);
-            return users;
-        }
-
-    }
 //    @Bean
 //    public JdbcUserDetailsManager user(PasswordEncoder encoder) {
 //        UserDetails admin = User.builder()

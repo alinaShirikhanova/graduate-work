@@ -19,6 +19,5 @@ public abstract class  CommentMapper {
     @Mapping(target = "author", expression = "java(commentEntity.getAuthor().getId())")
     @Mapping(target = "authorImage", expression = "java(commentEntity.getAuthor().getImage())")
     @Mapping(target = "authorFirstName", expression = "java(commentEntity.getAuthor().getFirstName())")
-    @Mapping(target = "pk", source = "commentEntity.id")
     public abstract Comment commentEntityToComment(CommentEntity commentEntity);
 }
