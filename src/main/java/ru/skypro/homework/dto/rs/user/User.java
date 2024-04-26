@@ -14,9 +14,6 @@ public class User {
     private String lastName;
     private String phone;
     private String image;
-    /**
-     * Поля относящиеся к сущности RoleEntity
-     */
     private Role role;
 
 }

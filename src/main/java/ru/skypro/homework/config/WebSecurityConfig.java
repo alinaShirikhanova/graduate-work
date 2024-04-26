@@ -17,6 +17,8 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import ru.skypro.homework.dto.rq.user.Role;
+import ru.skypro.homework.exception.UserNotFoundException;
+import ru.skypro.homework.repository.UserRepository;
 
 import javax.sql.DataSource;
 
@@ -25,7 +27,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableMethodSecurity
 public class WebSecurityConfig {
-    UserDetailsService userDetailsService;
+    UserRepository repository;
 
     private static final String[] AUTH_WHITELIST = {
             "/swagger-resources/**",
@@ -35,7 +37,12 @@ public class WebSecurityConfig {
             "/login",
             "/register"
     };
-
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        return username -> repository
+//                .findByUsername(username)
+//                .orElseThrow(() -> new UserNotFoundException("User not found"));
+//    }
 //    @Bean
 //    public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
 //        UserDetails user =
@@ -67,15 +74,15 @@ public class WebSecurityConfig {
 //
 //    }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-
-        return authProvider;
-    }
+//    @Bean
+//    public DaoAuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//
+//        authProvider.setUserDetailsService(userDetailsService);
+//        authProvider.setPasswordEncoder(passwordEncoder());
+//
+//        return authProvider;
+//    }
 //    @Bean
 //    public JdbcUserDetailsManager user(PasswordEncoder encoder) {
 //        UserDetails admin = User.builder()

@@ -16,9 +16,9 @@ public interface AdMapper {
 
     AdEntity createOrUpdateAdToCommentEntity(CreateOrUpdateAd createOrUpdateAd);
 
-    @Mapping(target = "authorFirstName", expression = "java(adEntity.getAuthor().getFirstName())")
-    @Mapping(target = "authorLastName", expression = "java(adEntity.getAuthor().getLastName())")
-    @Mapping(target = "username", expression = "java(adEntity.getAuthor().getUsername())")
-    @Mapping(target = "phone", expression = "java(adEntity.getAuthor().getPhone())")
-    ExtendedAd adEntityToExtendedAd(AdEntity adEntity);
+//    @Mapping(target = "authorFirstName", expression = "java(adEntity.getAuthor().getFirstName())")
+//    @Mapping(target = "authorLastName", expression = "java(adEntity.getAuthor().getLastName())")
+//    @Mapping(target = "username", expression = "java(adEntity.getAuthor().getUsername())")
+//    @Mapping(target = "phone", expression = "java(adEntity.getAuthor().getPhone())")
+//    ExtendedAd adEntityToExtendedAd(AdEntity adEntity);
 }
