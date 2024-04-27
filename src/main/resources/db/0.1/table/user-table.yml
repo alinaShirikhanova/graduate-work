@@ -21,24 +21,11 @@ databaseChangeLog:
               - column:
                   name: last_name
                   type: text
-#              - column:
-#                  name: email
-#                  type: text
-#                  constraints:
-#                    unique: true
-#                    uniqueConstraintName: user-table-email-unique
               - column:
                   name: username
                   type: text
                   constraints:
                     nullable: false
-#              - column:
-#                  name: username
-#                  type: text
-#                  constraints:
-#                    nullable: false
-
-
               - column:
                   name: password
                   type: text
@@ -47,19 +34,6 @@ databaseChangeLog:
               - column:
                   name: phone
                   type: text
-#              - column:
-#                  name: created
-#                  type: timestamptz
-#                  defaultValueDate: now()
-#                  constraints:
-#                    nullable: false
-#                    updatable: false
-#              - column:
-#                  name: updated
-#                  type: timestamptz
-#              - column:
-#                  name: is_active
-#                  type: boolean
-#                  defaultValueBoolean: false
-#                  constraints:
-#                    nullable: false
+              - column:
+                  name: image
+                  type: text

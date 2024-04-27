@@ -4,12 +4,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.UserDetailsManager;
+import org.springframework.stereotype.Service;
 import ru.skypro.homework.entity.UserEntity;
 import ru.skypro.homework.repository.UserRepository;
-
+@Service
 public class UserDetailsManagerImpl implements UserDetailsManager {
 
-   private final  UserRepository repository;
+    private final UserRepository repository;
 
     public UserDetailsManagerImpl(UserRepository repository) {
         this.repository = repository;
@@ -17,7 +18,10 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
 
     @Override
     public void createUser(UserDetails user) {
-
+        repository.save((UserEntity) user);
+        System.out.println(user);
+        System.out.println(user.getClass());
+        System.out.println(user + "зарегистрирован");
     }
 
     @Override

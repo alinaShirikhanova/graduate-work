@@ -27,7 +27,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableMethodSecurity
 public class WebSecurityConfig {
-    UserRepository repository;
+    private final UserDetailsManager userDetailsManager;
 
     private static final String[] AUTH_WHITELIST = {
             "/swagger-resources/**",
@@ -37,6 +37,20 @@ public class WebSecurityConfig {
             "/login",
             "/register"
     };
+
+    public WebSecurityConfig( UserDetailsManager userDetailsManager) {
+        this.userDetailsManager = userDetailsManager;
+
+    }
+
+
+    @Bean
+    public DaoAuthenticationProvider authProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsManager);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
 //    @Bean
 //    public UserDetailsService userDetailsService() {
 //        return username -> repository

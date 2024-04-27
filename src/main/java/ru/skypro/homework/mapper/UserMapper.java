@@ -19,7 +19,7 @@ public abstract class UserMapper {
     abstract UserEntity updateUserToUserEntity(UpdateUser updateUser);
     abstract UpdateUser userEntityToUpdateUser(UserEntity userEntity);
 
-    abstract UserEntity registerToUserEntity(Register register);
+    public abstract UserEntity registerToUserEntity(Register register);
 
     @Mapping(target = "name", expression = "java(role.name())")
     abstract RoleEntity roleToRoleEntity(Role role);

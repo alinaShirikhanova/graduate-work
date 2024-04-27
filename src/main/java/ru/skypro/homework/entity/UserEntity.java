@@ -3,6 +3,7 @@ package ru.skypro.homework.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(schema = "graduate", name = "users")
+@Table(schema = "public", name = "users")
 public class UserEntity implements UserDetails {
     /**
      * Id пользователя
@@ -78,7 +79,7 @@ public class UserEntity implements UserDetails {
      * Роль пользователя
      */
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private RoleEntity role;
 
