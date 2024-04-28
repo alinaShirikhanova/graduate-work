@@ -19,9 +19,6 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
     @Override
     public void createUser(UserDetails user) {
         repository.save((UserEntity) user);
-        System.out.println(user);
-        System.out.println(user.getClass());
-        System.out.println(user + "зарегистрирован");
     }
 
     @Override
