@@ -37,10 +37,8 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public boolean register(Register register) {
         if (manager.userExists(register.getUsername())) {
-            System.out.println("register.getUsername()");
             return false;
         }
-
         UserEntity user = mapper.registerToUserEntity(register);
         user.setPassword(encoder.encode(user.getPassword()));
         manager.createUser(user);
