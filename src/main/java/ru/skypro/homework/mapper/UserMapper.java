@@ -16,13 +16,16 @@ public abstract class UserMapper {
     @Mapping(target="role", expression = "java(getRole(userEntity))")
     abstract User userToUserEntity(UserEntity userEntity);
 
-    abstract UserEntity updateUserToUserEntity(UpdateUser updateUser);
-    abstract UpdateUser userEntityToUpdateUser(UserEntity userEntity);
+    public abstract UserEntity updateUserToUserEntity(UpdateUser updateUser);
+    public abstract UpdateUser userEntityToUpdateUser(UserEntity userEntity);
 
     public abstract UserEntity registerToUserEntity(Register register);
 
     @Mapping(target = "name", expression = "java(role.name())")
-    abstract RoleEntity roleToRoleEntity(Role role);
+    public abstract RoleEntity roleToRoleEntity(Role role);
+    @Mapping(target = "email", source = "username")
+    @Mapping(target = "role", expression = "java(getRole(userEntity))")
+    public abstract User userEntityToUser(UserEntity userEntity);
 
     public static Role getRole(UserEntity userEntity){
         return Role.valueOf(userEntity.getRole().getName());

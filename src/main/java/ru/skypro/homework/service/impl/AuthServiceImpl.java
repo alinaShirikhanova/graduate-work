@@ -27,6 +27,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean login(String userName, String password) {
+        System.out.println("зашли в логин");
         if (!manager.userExists(userName)) {
             return false;
         }
@@ -39,6 +40,7 @@ public class AuthServiceImpl implements AuthService {
         if (manager.userExists(register.getUsername())) {
             return false;
         }
+
         UserEntity user = mapper.registerToUserEntity(register);
         user.setPassword(encoder.encode(user.getPassword()));
         manager.createUser(user);
