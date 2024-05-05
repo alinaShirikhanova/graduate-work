@@ -14,6 +14,7 @@ import ru.skypro.homework.dto.rq.ad.CreateOrUpdateAd;
 import ru.skypro.homework.dto.rs.ad.Ad;
 import ru.skypro.homework.dto.rs.ad.Ads;
 import ru.skypro.homework.dto.rs.ad.ExtendedAd;
+import ru.skypro.homework.service.AdService;
 
 import java.io.IOException;
 
@@ -23,9 +24,10 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @RequestMapping("ads")
 public class AdController {
+    private final AdService service;
     @GetMapping
     public ResponseEntity<?> getAllAds() {
-        return ResponseEntity.ok(new Ads());
+        return ResponseEntity.ok(service.getAllAds());
     }
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})

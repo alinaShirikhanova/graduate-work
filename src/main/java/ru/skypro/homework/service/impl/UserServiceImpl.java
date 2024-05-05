@@ -33,8 +33,7 @@ public class UserServiceImpl implements UserService {
 
     public void updatePassword(NewPassword newPassword, String username) {
         System.out.println("update");
-        UserEntity user = repository.findByUsername(username)
-                .orElseThrow(UserNotFoundException::new);
+        UserEntity user = getUserByUsername(username);
         String password = checkPasswords(newPassword, user);
         user.setPassword(encoder.encode(password));
         repository.save(user);
@@ -42,22 +41,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(String username) {
-        Optional<UserEntity> userEntity = repository.findByUsername(username);
-        if (userEntity.isPresent())
-            return mapper.userEntityToUser(userEntity.get());
-        throw new UserNotFoundException("Такого пользователя нет");
+        UserEntity userEntity = getUserByUsername(username);
+        return mapper.userEntityToUser(userEntity);
     }
 
     @Override
     public UpdateUser updateUser(UpdateUser updateUser, String username) {
-        Optional<UserEntity> userEntity = repository.findByUsername(username);
-        if (userEntity.isPresent()){
-            UserEntity user;
-            user = mapper.updateUserToUserEntity(updateUser);
-            repository.save(user);
-            return mapper.userEntityToUpdateUser(user);
-        }
-        throw new UserNotFoundException("User not found");
+        UserEntity userEntity = getUserByUsername(username);
+        userEntity.setFirstName(updateUser.getFirstName());
+        userEntity.setLastName(updateUser.getLastName());
+        userEntity.setPhone(updateUser.getPhone());
+        repository.save(userEntity);
+        return mapper.userEntityToUpdateUser(userEntity);
     }
 
     @Override
@@ -77,5 +72,10 @@ public class UserServiceImpl implements UserService {
             throw new ReusePasswordException();
         }
         return newPassword;
+    }
+
+    private UserEntity getUserByUsername(String username) {
+        return repository.findByUsername(username)
+                .orElseThrow(UserNotFoundException::new);
     }
 }

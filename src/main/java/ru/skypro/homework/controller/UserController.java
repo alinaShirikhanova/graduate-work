@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ru.skypro.homework.dto.rq.user.NewPassword;
 import ru.skypro.homework.dto.rq.user.UpdateUser;
-import ru.skypro.homework.dto.rs.user.User;
 import ru.skypro.homework.service.UserService;
 
 
@@ -35,8 +34,6 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-
-
     @GetMapping("/me")
     public ResponseEntity<?> getUser(Authentication authentication) {
         return ResponseEntity.ok(service.getUser(authentication.getName()));
@@ -44,7 +41,7 @@ public class UserController {
 
     @PatchMapping("/me")
     public ResponseEntity<?> updateUser(@RequestBody UpdateUser updateUser, Authentication authentication) {
-        return ResponseEntity.ok(service.updateUser(updateUser, authentication.getName() ));
+        return ResponseEntity.ok(service.updateUser(updateUser, authentication.getName()));
     }
 
     @PatchMapping(value = "/me/image", consumes = MULTIPART_FORM_DATA_VALUE)
