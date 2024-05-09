@@ -17,9 +17,8 @@ import ru.skypro.homework.service.UserService;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @Slf4j
-@CrossOrigin
+@CrossOrigin(value = "http://localhost:8080")
 @RestController
-
 @RequestMapping("users")
 public class UserController {
    private final UserService service;
@@ -29,14 +28,15 @@ public class UserController {
     }
 
     @PostMapping("/set_password")
-    public ResponseEntity<?> setPassword(@RequestBody NewPassword newPassword, Authentication authentication) {
-        service.updatePassword(newPassword, authentication.getName());
+    public ResponseEntity<?> setPassword(@RequestBody NewPassword newPassword) {
+        System.out.println("Controller");
+        service.updatePassword(newPassword);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> getUser(Authentication authentication) {
-        return ResponseEntity.ok(service.getUser(authentication.getName()));
+    public ResponseEntity<?> getUser() {
+        return ResponseEntity.ok(service.getUser());
     }
 
     @PatchMapping("/me")

@@ -31,17 +31,18 @@ public class UserServiceImpl implements UserService {
         this.encoder = encoder;
     }
 
-    public void updatePassword(NewPassword newPassword, String username) {
+    public void updatePassword(NewPassword newPassword) {
         System.out.println("update");
-        UserEntity user = getUserByUsername(username);
+        UserEntity user = getUserByUsername(getCurrentUsername());
         String password = checkPasswords(newPassword, user);
         user.setPassword(encoder.encode(password));
         repository.save(user);
     }
 
     @Override
-    public User getUser(String username) {
-        UserEntity userEntity = getUserByUsername(username);
+    public User getUser() {
+        System.out.println("Зашли");
+        UserEntity userEntity = getUserByUsername(getCurrentUsername());
         return mapper.userEntityToUser(userEntity);
     }
 
@@ -77,5 +78,9 @@ public class UserServiceImpl implements UserService {
     private UserEntity getUserByUsername(String username) {
         return repository.findByUsername(username)
                 .orElseThrow(UserNotFoundException::new);
+    }
+
+    private String getCurrentUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }
