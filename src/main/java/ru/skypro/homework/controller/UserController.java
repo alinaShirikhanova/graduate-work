@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ru.skypro.homework.dto.rq.user.NewPassword;
 import ru.skypro.homework.dto.rq.user.UpdateUser;
+import ru.skypro.homework.service.AuthService;
 import ru.skypro.homework.service.UserService;
 
 
@@ -22,17 +23,31 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 @RequestMapping("users")
 public class UserController {
    private final UserService service;
+   private final AuthService authService;
 
-    public UserController(UserService service) {
+    public UserController(UserService service, AuthService authService) {
         this.service = service;
+        this.authService = authService;
     }
 
     @PostMapping("/set_password")
-    public ResponseEntity<?> setPassword(@RequestBody NewPassword newPassword) {
+    public ResponseEntity<?> setPassword(@RequestBody NewPassword newPassword, Authentication authentication) {
         System.out.println("Controller");
-        service.updatePassword(newPassword);
+        service.updatePassword(newPassword, authentication.getName());
         return ResponseEntity.ok().build();
     }
+
+//    @PostMapping("/set_password")
+//    public NewPassword setPassword(@RequestBody NewPassword newPassword, Authentication authentication) {
+//        NewPassword resultPassword = new NewPassword();
+//        authService.changePassword(
+//                        authentication.getName(),
+//                        newPassword.getCurrentPassword(),
+//                        newPassword.getNewPassword()
+//                )
+//                .ifPresent(resultPassword::setCurrentPassword);
+//        return resultPassword;
+//    }
 
     @GetMapping("/me")
     public ResponseEntity<?> getUser() {

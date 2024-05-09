@@ -31,6 +31,14 @@ public class UserServiceImpl implements UserService {
         this.encoder = encoder;
     }
 
+
+    public void updatePassword(NewPassword newPassword, String username) {
+        System.out.println("update");
+        UserEntity user = getUserByUsername(username);
+        String password = checkPasswords(newPassword, user);
+        user.setPassword(encoder.encode(password));
+        repository.save(user);
+    }
     public void updatePassword(NewPassword newPassword) {
         System.out.println("update");
         UserEntity user = getUserByUsername(getCurrentUsername());
