@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import ru.skypro.homework.entity.UserEntity;
 import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.repository.UserRepository;
+import ru.skypro.homework.security.UserDetailsImpl;
+
 @Service
 public class UserDetailsManagerImpl implements UserDetailsManager {
 
@@ -23,9 +25,8 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
         repository.save((UserEntity) user);
     }
 
-    @Override
     public void updateUser(UserDetails user) {
-
+        repository.save((UserEntity) user);
     }
 
     @Override
@@ -34,8 +35,11 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
     }
 
     @Override
-    public void changePassword(String oldPassword, String newPassword) {
-
+    public void changePassword(String username, String newPassword) {
+        repository.findByUsername(username).ifPresent(userEntity -> {
+            userEntity.setPassword(newPassword);
+            repository.save(userEntity);
+        });
     }
 
     @Override
@@ -48,10 +52,6 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
         UserEntity entity = repository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException(""));
 
-        return User.builder()
-                .username(entity.getUsername())
-                .password(entity.getPassword())
-                .roles(entity.getRole().getName())
-                .build();
+        return UserDetailsImpl.build(entity);
     }
 }

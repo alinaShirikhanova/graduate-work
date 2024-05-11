@@ -49,14 +49,21 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(
-                        authorization ->
-                                authorization
-                                        .mvcMatchers(AUTH_WHITELIST)
-                                        .permitAll()
-                                        .mvcMatchers("/ads/**", "/users/**")
-                                        .authenticated())
+                .authorizeRequests(authorize -> authorize
+                        .antMatchers("/swagger-resources/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs",
+                                "/webjars/**",
+                                "/login",
+                                "/register",
+                                "/ads",
+                                "/images/**")
+                        .permitAll()
+                        .anyRequest().authenticated()
+                )
+                .csrf().disable()
                 .httpBasic(withDefaults());
+
         return http.build();
     }
 
