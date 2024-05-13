@@ -23,19 +23,20 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
         repository.save((UserEntity) user);
     }
 
-    @Override
     public void updateUser(UserDetails user) {
-
+        repository.save((UserEntity) user);
     }
-
     @Override
     public void deleteUser(String username) {
 
     }
 
     @Override
-    public void changePassword(String oldPassword, String newPassword) {
-
+    public void changePassword(String username, String newPassword) {
+        repository.findByUsername(username).ifPresent(userEntity -> {
+            userEntity.setPassword(newPassword);
+            repository.save(userEntity);
+        });
     }
 
     @Override
@@ -45,13 +46,8 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        UserEntity entity = repository.findByUsername(username)
+        return repository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException(""));
 
-        return User.builder()
-                .username(entity.getUsername())
-                .password(entity.getPassword())
-                .roles(entity.getRole().getName())
-                .build();
     }
 }
