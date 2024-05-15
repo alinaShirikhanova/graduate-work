@@ -55,8 +55,8 @@ public class UserController {
     }
 
     @PatchMapping("/me")
-    public ResponseEntity<?> updateUser(@RequestBody UpdateUser updateUser, Authentication authentication) {
-        return ResponseEntity.ok(service.updateUser(updateUser, authentication.getName()));
+    public ResponseEntity<?> updateUser(@RequestBody UpdateUser updateUser) {
+        return ResponseEntity.ok(service.updateUser(updateUser));
     }
 
     @PatchMapping(value = "/me/image", consumes = MULTIPART_FORM_DATA_VALUE)

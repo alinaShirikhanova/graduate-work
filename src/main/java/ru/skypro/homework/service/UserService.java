@@ -10,9 +10,13 @@ import ru.skypro.homework.entity.UserEntity;
 public interface UserService {
     void updatePassword(NewPassword newPassword, String username);
 
+    void setPassword(NewPassword newPassword, String username);
+
     User getUser();
 
-    UpdateUser updateUser(UpdateUser updateUser, String name);
+    UpdateUser updateUser(UpdateUser updateUser);
 
     void updateAvatarOfUser(MultipartFile image, Authentication authentication);
+
+    UserEntity getCurrentUser();
 }
