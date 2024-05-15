@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Table(schema = "public", name = "users")
 public class UserEntity implements UserDetails {
 
-    private static final long serialVersionUID = 1L;
+
     /**
      * Id пользователя
      */
@@ -82,7 +82,7 @@ public class UserEntity implements UserDetails {
      * Роль пользователя
      */
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private RoleEntity role;
 
@@ -102,7 +102,11 @@ public class UserEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new GrantedAuthority[]{});
+        return Optional.ofNullable(role)
+                .map(role -> "ROLE_" + role)
+                .map(SimpleGrantedAuthority::new)
+                .map(List::of)
+                .orElse(Collections.emptyList());
     }
 
     @Override
