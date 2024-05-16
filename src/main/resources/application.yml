@@ -11,3 +11,8 @@ spring:
     change-log: classpath:db/changelog-master.yml
     liquibase-schema: public
     enabled: true
+
+path:
+  to:
+    photos:
+      folder: static/avatars

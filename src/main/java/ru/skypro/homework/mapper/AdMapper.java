@@ -9,16 +9,18 @@ import ru.skypro.homework.entity.AdEntity;
 
 @Mapper(componentModel = "spring")
 public interface AdMapper {
-    CreateOrUpdateAd createOrUpdateAdToAdEntity(AdEntity adEntity);
+    CreateOrUpdateAd adEntityToCreateOrUpdateAd(AdEntity adEntity);
 
     @Mapping(target = "author", expression = "java(adEntity.getAuthor().getId())")
+    @Mapping(target = "image", expression = "java(adEntity.getImage().getFilePath())")
     Ad adEntityToAd(AdEntity adEntity);
 
-    AdEntity createOrUpdateAdToCommentEntity(CreateOrUpdateAd createOrUpdateAd);
+    AdEntity createOrUpdateAdToAdEntity(CreateOrUpdateAd createOrUpdateAd);
 
     @Mapping(target = "authorFirstName", expression = "java(adEntity.getAuthor().getFirstName())")
     @Mapping(target = "authorLastName", expression = "java(adEntity.getAuthor().getLastName())")
     @Mapping(target = "email", expression = "java(adEntity.getAuthor().getUsername())")
     @Mapping(target = "phone", expression = "java(adEntity.getAuthor().getPhone())")
+    @Mapping(target = "image", expression = "java(adEntity.getImage().getFilePath())")
     ExtendedAd adEntityToExtendedAd(AdEntity adEntity);
 }

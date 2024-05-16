@@ -33,8 +33,8 @@ public class AdController {
      * @return {@code ResponseEntity.ok(new Ad())} объявление добавилось
      */
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> createAd(@RequestPart(value = "properties", required = false) CreateOrUpdateAd properties,@RequestPart("image") MultipartFile image) {
-        return ResponseEntity.ok(new Ad());
+    public ResponseEntity<?> createAd(@RequestPart(value = "properties", required = false) CreateOrUpdateAd properties, @RequestPart("image") MultipartFile image) throws IOException {
+        return ResponseEntity.ok(adService.createAd(properties, image));
     }
 
     /**
@@ -100,7 +100,8 @@ public class AdController {
      * @return {@code ResponseEntity.ok(new User())} обновленное изображение объявления
      */
     @PatchMapping(value ="/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> updateImage(@PathVariable("id") Integer adId, @RequestPart MultipartFile image) {
+    public ResponseEntity<?> updateImage(@PathVariable("id") Integer adId, @RequestPart MultipartFile image) throws IOException {
+        adService.updateImage(adId, image);
         return ResponseEntity.ok().build();
     }
 

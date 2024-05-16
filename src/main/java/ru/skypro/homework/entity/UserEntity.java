@@ -23,8 +23,6 @@ import java.util.stream.Collectors;
 @Accessors(chain = true)
 @Table(schema = "public", name = "users")
 public class UserEntity implements UserDetails {
-
-
     /**
      * Id пользователя
      */
