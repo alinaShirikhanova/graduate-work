@@ -25,7 +25,4 @@ public class PhotoEntity {
 
     @Column(name = "mediaType")
     String mediaType;
-
-    @Lob
-    byte[] data;
 }
