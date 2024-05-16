@@ -99,8 +99,14 @@ private final UserMapper mapper;
     }
 
     @Override
-    public void updatePassword(NewPassword newPassword, String username) {
-
+    public void updatePassword(NewPassword newPassword) {
+        UserEntity user = getUserByUsername(getCurrentUsername());
+        if (encoder.matches(newPassword.getCurrentPassword(), user.getPassword())) {
+            user.setPassword(encoder.encode(newPassword.getNewPassword()));
+            userRepository.save(user);
+        } else {
+            throw new WrongPasswordException("Некорректные пароли");
+        }
     }
 
     @Override
@@ -143,6 +149,8 @@ private final UserMapper mapper;
     }
 
     private UserEntity getUserByUsername(String username) {
+        UserEntity entity = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("Такого пользователя не найдено"));
+        System.out.println(entity.getUsername());
         return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("Такого пользователя не найдено"));
     }
 

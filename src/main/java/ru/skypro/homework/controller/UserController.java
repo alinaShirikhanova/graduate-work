@@ -31,9 +31,9 @@ public class UserController {
     }
 
     @PostMapping("/set_password")
-    public ResponseEntity<?> setPassword(@RequestBody NewPassword newPassword, Authentication authentication) {
+    public ResponseEntity<?> setPassword(@RequestBody NewPassword newPassword) {
         System.out.println("Controller");
-        service.updatePassword(newPassword, authentication.getName());
+        service.updatePassword(newPassword);
         return ResponseEntity.ok().build();
     }
 

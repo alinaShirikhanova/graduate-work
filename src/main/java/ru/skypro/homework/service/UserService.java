@@ -8,7 +8,7 @@ import ru.skypro.homework.dto.rs.user.User;
 import ru.skypro.homework.entity.UserEntity;
 
 public interface UserService {
-    void updatePassword(NewPassword newPassword, String username);
+    void updatePassword(NewPassword newPassword);
 
     void setPassword(NewPassword newPassword, String username);
 
