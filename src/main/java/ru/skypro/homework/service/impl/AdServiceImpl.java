@@ -108,6 +108,7 @@ public class AdServiceImpl implements AdService {
         UserEntity user = userService.getCurrentUser();
         adEntity.setAuthor(user);
         adEntity.setImage(photoEntity);
+        adRepository.save(adEntity);
         return mapper.adEntityToAd(adEntity);
     }
 }
