@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+
+
+  liquibase:
+    image: kilna/liquibase-postgres:latest
+    volumes:
+      - ./db/changelog-master.yml:/workspace/changelog/changelog-master.yml:ro
+    environment:
+      LIQUIBASE_URL: jdbc:postgresql://postgres:5432/postgres
+      LIQUIBASE_USERNAME: postgres
+      LIQUIBASE_PASSWORD: 123
+      LIQUIBASE_SCHEMA: public
+
