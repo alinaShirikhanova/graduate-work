@@ -28,7 +28,6 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
     public void updateUser(UserDetails user) {
         repository.save((UserEntity) user);
     }
-
     @Override
     public void deleteUser(String username) {
 
@@ -49,9 +48,8 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        UserEntity entity = repository.findByUsername(username)
+        return repository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException(""));
-
         return UserDetailsImpl.build(entity);
     }
 }

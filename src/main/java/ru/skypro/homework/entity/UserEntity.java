@@ -19,9 +19,12 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+//@RequiredArgsConstructor
 @Accessors(chain = true)
 @Table(schema = "public", name = "users")
 public class UserEntity implements UserDetails {
+
+
     /**
      * Id пользователя
      */
@@ -79,13 +82,23 @@ public class UserEntity implements UserDetails {
      * Роль пользователя
      */
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private RoleEntity role;
 
     @Column(name = "is_active", nullable = false, columnDefinition = "boolean default false")
     private boolean isActive;
 
+
+
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return Optional.ofNullable(role)
+//                .map(role -> "ROLE_" + role)
+//                .map(SimpleGrantedAuthority::new)
+//                .map(List::of)
+//                .orElse(Collections.emptyList());
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -113,7 +126,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return isActive;
+        return true;
     }
 
     @Override
@@ -123,6 +136,20 @@ public class UserEntity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isActive;
+        return true;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity that = (UserEntity) o;
+        return isActive == that.isActive && Objects.equals(id, that.id) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(phone, that.phone) && Objects.equals(image, that.image) && Objects.equals(comments, that.comments) && Objects.equals(ads, that.ads) && Objects.equals(role, that.role);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, firstName, lastName, phone, image, comments, ads, role, isActive);
     }
 }

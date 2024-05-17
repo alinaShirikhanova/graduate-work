@@ -24,14 +24,13 @@ public class AuthServiceImpl implements AuthService {
     private final UserDetailsManager manager;
     private final UserMapper mapper;
     private final PasswordEncoder encoder;
-    private final UserRepository repository;
+
 
     public AuthServiceImpl(UserDetailsManager manager, UserMapper mapper,
-                           PasswordEncoder passwordEncoder, UserRepository repository) {
+                           PasswordEncoder passwordEncoder) {
         this.manager = manager;
         this.mapper = mapper;
         this.encoder = passwordEncoder;
-        this.repository = repository;
     }
 
 
@@ -67,6 +66,7 @@ public class AuthServiceImpl implements AuthService {
         manager.createUser(user);
         return true;
     }
+
 
 
 

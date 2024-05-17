@@ -20,6 +20,13 @@ import ru.skypro.homework.dto.rq.user.Role;
 import static org.springframework.security.config.Customizer.withDefaults;
 @EnableMethodSecurity
 @Configuration
+@EnableGlobalMethodSecurity(
+        prePostEnabled = true,
+        securedEnabled = true,
+        jsr250Enabled = true)
+//Свойство prePostEnabled включает аннотации Spring Security до и после.
+//Свойство SecureEnabled определяет, следует ли включать аннотацию @Secured .
+//Свойство jsr250Enabled позволяет нам использовать аннотацию @RoleAllowed .
 public class WebSecurityConfig {
     private final UserDetailsService service;
 
@@ -46,26 +53,44 @@ public class WebSecurityConfig {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests(authorize -> authorize
-                        .antMatchers("/swagger-resources/**",
-                                "/swagger-ui.html",
-                                "/v3/api-docs",
-                                "/webjars/**",
-                                "/login",
-                                "/register",
-                                "/ads",
-                                "/images/**")
-                        .permitAll()
-                        .anyRequest().authenticated()
-                )
-                .csrf().disable()
+        http.csrf()
+                .disable()
+                .authorizeHttpRequests(
+                        authorization ->
+                                authorization
+                                        .mvcMatchers(AUTH_WHITELIST)
+                                        .permitAll()
+                                        .mvcMatchers("/ads/**", "/users/**")
+                                        .authenticated())
+                .cors()
+                .and()
                 .httpBasic(withDefaults());
 
         return http.build();
     }
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+//                .authorizeRequests(authorize -> authorize
+//                        .antMatchers("/swagger-resources/**",
+//                                "/swagger-ui.html",
+//                                "/v3/api-docs",
+//                                "/webjars/**",
+//                                "/login",
+//                                "/register",
+//                                "/ads",
+//                                "/images/**")
+//                        .permitAll()
+//                        .anyRequest().authenticated()
+//                )
+//                .csrf().disable()
+//                .httpBasic(withDefaults());
+//
+//        return http.build();
+//    }
 
 //    @Bean
 //    public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {

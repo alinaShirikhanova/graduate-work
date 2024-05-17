@@ -8,7 +8,7 @@ import ru.skypro.homework.dto.rq.comment.CreateOrUpdateComment;
 import ru.skypro.homework.entity.CommentEntity;
 import ru.skypro.homework.repository.UserRepository;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public abstract class  CommentMapper {
     @Autowired
     UserRepository userRepository;
