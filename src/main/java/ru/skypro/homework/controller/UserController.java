@@ -32,22 +32,10 @@ public class UserController {
 
     @PostMapping("/set_password")
     public ResponseEntity<?> setPassword(@RequestBody NewPassword newPassword) {
-        System.out.println("Controller");
         service.updatePassword(newPassword);
         return ResponseEntity.ok().build();
     }
 
-//    @PostMapping("/set_password")
-//    public NewPassword setPassword(@RequestBody NewPassword newPassword, Authentication authentication) {
-//        NewPassword resultPassword = new NewPassword();
-//        authService.changePassword(
-//                        authentication.getName(),
-//                        newPassword.getCurrentPassword(),
-//                        newPassword.getNewPassword()
-//                )
-//                .ifPresent(resultPassword::setCurrentPassword);
-//        return resultPassword;
-//    }
 
     @GetMapping("/me")
     public ResponseEntity<?> getUser() {

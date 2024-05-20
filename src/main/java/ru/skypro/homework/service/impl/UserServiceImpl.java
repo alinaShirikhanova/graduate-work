@@ -132,6 +132,7 @@ private final UserMapper mapper;
     @Override
     public void updateAvatarOfUser(MultipartFile image, Authentication authentication) {
 
+
     }
 
     @Override
