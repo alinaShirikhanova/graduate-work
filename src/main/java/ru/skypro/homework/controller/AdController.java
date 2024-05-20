@@ -18,10 +18,13 @@ import ru.skypro.homework.service.AdService;
 
 import java.io.IOException;
 
+import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
+import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
+
 @Slf4j
-@CrossOrigin
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(value = "http://localhost:3000")
 @RequestMapping("ads")
 public class AdController {
     private final AdService adService;
@@ -93,16 +96,21 @@ public class AdController {
         return ResponseEntity.ok(adService.getAdsByUser(authentication.getName()));
     }
 
-    /**
-     * Обновление картинки объявления {@code getAdById}
-     * @param adId объявления
-     * @param image картинки объявление пользователем
-     * @return {@code ResponseEntity.ok(new User())} обновленное изображение объявления
-     */
-    @PatchMapping(value ="/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> updateImage(@PathVariable("id") Integer adId, @RequestPart MultipartFile image) throws IOException {
-        adService.updateImage(adId, image);
-        return ResponseEntity.ok().build();
+//    /**
+//     * Обновление картинки объявления {@code getAdById}
+//     * @param adId объявления
+//     * @param image картинки объявление пользователем
+//     * @return {@code ResponseEntity.ok(new User())} обновленное изображение объявления
+//     */
+//    @PatchMapping(value ="/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public ResponseEntity<?> updateImage(@PathVariable("id") Integer adId, @RequestPart MultipartFile image) throws IOException {
+//        adService.updateImage(adId, image);
+//        return ResponseEntity.ok().build();
+//    }
+    @GetMapping(value = "images/{photoId}", produces = {IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE})
+    public ResponseEntity<byte[]> getImage(@PathVariable("photoId") int photoId) throws IOException {
+        return ResponseEntity.ok(adService.getImageByAdId(photoId));
     }
+
 
 }

@@ -13,7 +13,7 @@ import ru.skypro.homework.service.CommentService;
 
 @Slf4j
 @RestController
-@CrossOrigin
+@CrossOrigin(value = "http://localhost:3000")
 @RequestMapping("/ads")
 public class CommentController {
     /**

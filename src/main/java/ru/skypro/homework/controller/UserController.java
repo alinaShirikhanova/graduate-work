@@ -15,10 +15,12 @@ import ru.skypro.homework.service.AuthService;
 import ru.skypro.homework.service.UserService;
 
 
+import java.io.IOException;
+
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @Slf4j
-@CrossOrigin(value = "http://localhost:8080")
+@CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequestMapping("users")
 public class UserController {
@@ -48,8 +50,12 @@ public class UserController {
     }
 
     @PatchMapping(value = "/me/image", consumes = MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> updateAvatarOfUser(@RequestParam MultipartFile image, Authentication authentication) {
-        service.updateAvatarOfUser(image, authentication);
+    public ResponseEntity<?> updateAvatarOfUser(@RequestParam MultipartFile image) {
+        try {
+            service.updateAvatarOfUser(image);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         return ResponseEntity.ok().build();
     }
 }

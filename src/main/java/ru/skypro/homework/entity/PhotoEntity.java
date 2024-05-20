@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class PhotoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    Integer id;
 
     @Column(name = "filePath")
     String filePath;
