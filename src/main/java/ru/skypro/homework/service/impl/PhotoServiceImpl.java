@@ -3,20 +3,16 @@ package ru.skypro.homework.service.impl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import ru.skypro.homework.entity.AdEntity;
 import ru.skypro.homework.entity.PhotoEntity;
-import ru.skypro.homework.exception.AdNotFoundException;
 import ru.skypro.homework.repository.PhotoRepository;
 import ru.skypro.homework.service.PhotoService;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import static java.nio.file.StandardOpenOption.CREATE_NEW;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class PhotoServiceImpl implements PhotoService {
@@ -29,57 +25,34 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public PhotoEntity uploadImage(MultipartFile image) throws IOException {
-        File file = new File(photosDir + LocalDate.now() + "." + getExtensions(image.getOriginalFilename()));
+    public String uploadImage(MultipartFile image, String type) throws IOException {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yy-hh-mm-ss");
+        LocalDateTime dateTime = LocalDateTime.now();
+        File file = new File(photosDir + type + "/" + dtf.format(dateTime) + "." + getExtension(image.getOriginalFilename()));
         System.out.println(file);
 
         try (FileOutputStream fos = new FileOutputStream(file)) {
             fos.write(image.getBytes());
         }
-//        Path filePath = Path.of(photosDir );
-//        Files.createDirectories(filePath.getParent());
-//        Files.deleteIfExists(filePath);
-//        try (
-//                InputStream is = image.getInputStream();
-//                OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
-//                BufferedInputStream bis = new BufferedInputStream(is, 1024);
-//                BufferedOutputStream bos = new BufferedOutputStream(os, 1024);
-//        ) {
-//            bis.transferTo(bos);
-//        }
-
-//        Path filePath = Path.of(photosDir, image.getName() + LocalDate.now() + "." + getExtensions(image.getOriginalFilename()));
-//        Files.createDirectories(filePath.getParent());
-//        Files.deleteIfExists(filePath);
-//        try (
-//                InputStream is = image.getInputStream();
-//                OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
-//                BufferedInputStream bis = new BufferedInputStream(is, 1024);
-//                BufferedOutputStream bos = new BufferedOutputStream(os, 1024);
-//        ) {
-//            bis.transferTo(bos);
-//        }
         PhotoEntity photoEntity = new PhotoEntity();
         System.out.println(photosDir + image.getName());
-        photoEntity.setFilePath(photosDir + image.getName());
+        photoEntity.setFilePath(photosDir + file.getName());
         photoEntity.setFileSize(image.getSize());
         photoEntity.setMediaType(image.getContentType());
         photoRepository.save(photoEntity);
-
-
-//        Path path = Paths.get(photosDir, image.getName());
-//        Path file = Files.createFile(path);
-//        FileOutputStream stream = null;
-//        try {
-//            stream = new FileOutputStream(file.toString());
-//            stream.write(image.getBytes());
-//        } finally {
-//            stream.close();
-//        }
-        return photoEntity;
+        return photoEntity.getFilePath();
     }
 
-    private String getExtensions(String fileName) {
+    @Override
+    public byte[] downloadImage(int id) {
+        return new byte[0];
+    }
+
+    private String getFileName(String fileName) {
+        return fileName.substring(0, fileName.lastIndexOf("."));
+    }
+
+    private String getExtension(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 }

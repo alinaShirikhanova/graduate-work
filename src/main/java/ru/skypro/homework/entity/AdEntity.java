@@ -27,9 +27,9 @@ public class AdEntity {
     /**
      * Медиа файл объявления
      */
-    @OneToOne
-    @JoinColumn(name = "image_id")
-    private PhotoEntity image;
+
+    @Column(name="image")
+    private String image;
 
     /**
      * Цена объявления

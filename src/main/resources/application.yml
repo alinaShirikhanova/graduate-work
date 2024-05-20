@@ -15,4 +15,4 @@ spring:
 path:
   to:
     photos:
-      folder: src/main/resources/static/photos/
+      folder: src/main/resources/static/

@@ -98,16 +98,18 @@ public class AdServiceImpl implements AdService {
     }
 
     public void updateImage(Integer adId, MultipartFile image) throws IOException {
-        photoService.uploadImage(image);
+        AdEntity adEntity = getAdById(adId);
+        adEntity.setImage(photoService.uploadImage(image, "photos"));
+        adRepository.save(adEntity);
     }
 
     @Override
     public Ad createAd(CreateOrUpdateAd createOrUpdateAd, MultipartFile image) throws IOException {
         AdEntity adEntity = mapper.createOrUpdateAdToAdEntity(createOrUpdateAd);
-        PhotoEntity photoEntity = photoService.uploadImage(image);
+        String filePath = photoService.uploadImage(image, "photos");
         UserEntity user = userService.getCurrentUser();
         adEntity.setAuthor(user);
-        adEntity.setImage(photoEntity);
+        adEntity.setImage(filePath);
         adRepository.save(adEntity);
         return mapper.adEntityToAd(adEntity);
     }

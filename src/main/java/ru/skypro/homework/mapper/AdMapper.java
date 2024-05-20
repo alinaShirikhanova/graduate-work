@@ -1,6 +1,6 @@
 package ru.skypro.homework.mapper;
 
-import org.mapstruct.Mapper;
+import  org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.skypro.homework.dto.rq.ad.CreateOrUpdateAd;
 import ru.skypro.homework.dto.rs.ad.Ad;
@@ -12,7 +12,6 @@ public interface AdMapper {
     CreateOrUpdateAd adEntityToCreateOrUpdateAd(AdEntity adEntity);
 
     @Mapping(target = "author", expression = "java(adEntity.getAuthor().getId())")
-    @Mapping(target = "image", expression = "java(adEntity.getImage().getFilePath())")
     Ad adEntityToAd(AdEntity adEntity);
 
     AdEntity createOrUpdateAdToAdEntity(CreateOrUpdateAd createOrUpdateAd);
@@ -21,6 +20,5 @@ public interface AdMapper {
     @Mapping(target = "authorLastName", expression = "java(adEntity.getAuthor().getLastName())")
     @Mapping(target = "email", expression = "java(adEntity.getAuthor().getUsername())")
     @Mapping(target = "phone", expression = "java(adEntity.getAuthor().getPhone())")
-    @Mapping(target = "image", expression = "java(adEntity.getImage().getFilePath())")
     ExtendedAd adEntityToExtendedAd(AdEntity adEntity);
 }
