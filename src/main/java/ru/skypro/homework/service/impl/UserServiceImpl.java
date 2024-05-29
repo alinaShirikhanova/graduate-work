@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.rq.user.NewPassword;
 import ru.skypro.homework.dto.rq.user.UpdateUser;
 import ru.skypro.homework.dto.rs.user.User;
+import ru.skypro.homework.entity.RoleEntity;
 import ru.skypro.homework.entity.UserEntity;
 //import ru.skypro.homework.exception.ReusePasswordException;
 import ru.skypro.homework.exception.UserNotFoundException;
@@ -61,8 +62,6 @@ private final UserMapper mapper;
 
     }
 
-
-
     @Override
     public void updateAvatarOfUser(MultipartFile image) throws IOException {
         UserEntity user = getCurrentUser();
@@ -89,6 +88,7 @@ private final UserMapper mapper;
         System.out.println(entity.getUsername());
         return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("Такого пользователя не найдено"));
     }
+
 
     private String getCurrentUsername() {
         return SecurityContextHolder.getContext().getAuthentication().getName();

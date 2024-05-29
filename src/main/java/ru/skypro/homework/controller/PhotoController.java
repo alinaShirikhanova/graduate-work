@@ -17,8 +17,9 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 public class PhotoController {
 
     private final PhotoService photoService;
-//    @GetMapping(value = "/ad/{id}", produces = {IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE})
-//    public ResponseEntity<byte[]> getImage(@PathVariable int id) throws IOException {
-//        return ResponseEntity.ok(photoService.downloadImage(id));
-//    }
+    @GetMapping(value = "ad/{photoId}", produces = {IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE})
+    public ResponseEntity<byte[]> getImage(@PathVariable("photoId") int photoId) throws IOException {
+        System.out.println(photoId);
+        return ResponseEntity.ok(photoService.downloadImage(photoId));
+    }
 }

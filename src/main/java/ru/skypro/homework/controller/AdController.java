@@ -68,12 +68,13 @@ public class AdController {
      * @param id объявления
      * @return {@code ResponseEntity.ok().build()} код ответа сервера {@code №200, №401, №403, №404}.
      */
+
     @DeleteMapping("/{id}")
+    @PreAuthorize(value = "hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> deleteById(@PathVariable("id") Integer id) {
-        if (adService.deleteAdById(id)) {
+        adService.deleteAdById(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
     }
 
     /**
@@ -107,8 +108,9 @@ public class AdController {
 //        adService.updateImage(adId, image);
 //        return ResponseEntity.ok().build();
 //    }
-    @GetMapping(value = "images/{photoId}", produces = {IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE})
+    @GetMapping(value = "images/ad/{photoId}", produces = {IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE})
     public ResponseEntity<byte[]> getImage(@PathVariable("photoId") int photoId) throws IOException {
+        System.out.println(photoId);
         return ResponseEntity.ok(adService.getImageByAdId(photoId));
     }
 

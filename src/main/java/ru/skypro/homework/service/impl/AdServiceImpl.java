@@ -62,13 +62,12 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public boolean deleteAdById(Integer id) {
+    public void deleteAdById(Integer id) {
         Optional<AdEntity> awd = adRepository.findById(id);
         if (awd.isEmpty()) {
-            return false;
+            throw new AdNotFoundException();
         }
         adRepository.deleteById(id);
-        return true;
     }
 
     @Override

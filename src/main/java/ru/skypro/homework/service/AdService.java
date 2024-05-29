@@ -14,7 +14,7 @@ public interface AdService {
 
     ExtendedAd getInfoById(Integer id);
 
-    boolean deleteAdById(Integer id);
+    void deleteAdById(Integer id);
 
     Ad updateAdById(Integer id, CreateOrUpdateAd createOrUpdateAd);
 

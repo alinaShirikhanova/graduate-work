@@ -41,7 +41,7 @@ public class PhotoServiceImpl implements PhotoService {
         photoEntity.setFileSize(image.getSize());
         photoEntity.setMediaType(image.getContentType());
         photoRepository.save(photoEntity);
-        return photoEntity;
+        return photoRepository.save(photoEntity);
     }
 
     @Override

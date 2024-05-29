@@ -16,3 +16,7 @@ path:
   to:
     photos:
       folder: src/main/resources/static/
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
