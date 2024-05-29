@@ -22,6 +22,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -116,6 +117,11 @@ public class AdServiceImpl implements AdService {
     @Override
     public byte[] getImageByAdId(int photoId) throws IOException {
         return photoService.downloadImage(photoId);
+    }
+
+    @Override
+    public boolean isAuthor(String username, int id) {
+        return Objects.equals(userService.getCurrentUser().getId(), getAdById(id).getAuthor().getId());
     }
 
 

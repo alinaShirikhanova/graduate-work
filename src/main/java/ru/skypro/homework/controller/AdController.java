@@ -5,8 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -68,10 +70,12 @@ public class AdController {
      * @param id объявления
      * @return {@code ResponseEntity.ok().build()} код ответа сервера {@code №200, №401, №403, №404}.
      */
-
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @adServiceImpl.isAuthor(authentication.getName, #id)")
     @DeleteMapping("/{id}")
-    @PreAuthorize(value = "hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> deleteById(@PathVariable("id") Integer id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(auth.getAuthorities());
+
         adService.deleteAdById(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 

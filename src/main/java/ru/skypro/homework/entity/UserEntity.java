@@ -101,7 +101,7 @@ public class UserEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Optional.ofNullable(role)
-                .map(role -> "ROLE_" + role)
+                .map(role -> "ROLE_" + role.getName())
                 .map(SimpleGrantedAuthority::new)
                 .map(List::of)
                 .orElse(Collections.emptyList());

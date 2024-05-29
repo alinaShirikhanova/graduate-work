@@ -28,4 +28,5 @@ public interface AdService {
     Ad createAd(CreateOrUpdateAd properties, MultipartFile image) throws IOException;
 
     byte[] getImageByAdId(int id) throws IOException;
+    boolean isAuthor(String username, int id);
 }
